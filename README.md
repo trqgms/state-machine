@@ -2,5 +2,8 @@
 
 by torque-games
 
-insert here some documentation!
 
+
+manifest line: 
+
+> "com.torque-games.state-machine": "https://github.com/trqgms/state-machine.git",
