@@ -1,0 +1,16 @@
+{
+    "name": "state-machine",
+    "rootNamespace": "state-machine",
+    "references": [
+        "GUID:75a36ab8534d14d4a9bd16281da3dfbb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,22 @@
+{
+  "name": "com.torque-games.state-machine",
+  "version": "1.2.3",
+  "displayName": "state-machine",
+  "description": "state-machine is a cool package by torque-games",
+  "unity": "2021.2",
+  "unityRelease": "19f1",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3"
+  ],
+  "author": {
+    "name": "Torque Games",
+    "email": "torquegamesa@gmail.com",
+    "url": "https://github.com/torque-games/"
+  },
+  "type": "library"
+}
