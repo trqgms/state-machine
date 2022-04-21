@@ -9,9 +9,9 @@
   "changelogUrl": "",
   "licensesUrl": "https://www.gnu.org/licenses/gpl-3.0.html",
   "keywords": [],
-	"dependencies" : {"com.torque-games.injector":"https://github.com/trqgms/injector.git"
-
-}
+  "dependencies": {
+    "com.torque-games.injector": "https://github.com/trqgms/injector.git"
+  },
   "author": {
     "name": "Torque Games",
     "email": "torquegamesa@gmail.com",
