@@ -26,10 +26,36 @@ namespace StateMachine.Core
         private void Start()
         {
             CreateAbilities();
-            CurrentState = DeclareInitialState();
             DeclareStates();
+            InitializeDefaultState();
             ValidateAbilities();
             CurrentState.EnterState();
+        }
+
+        protected abstract void CreateAbilities();
+        protected abstract void DeclareStates();
+
+        private void InitializeDefaultState()
+        {
+            CurrentState = GetStateByType(DefaultState);
+        }
+
+        private void ValidateAbilities()
+        {
+#if UNITY_EDITOR
+            if (_abilitiesForState.Validate(out var collisions))
+            {
+                return;
+            }
+
+            foreach (var (state, abilityA, abilityB) in collisions)
+            {
+                Debug.LogError(
+                    $"on state {state.GetType().Name} the ability {abilityA.Name} collides with {abilityB.Name}");
+            }
+
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
         }
 
         private void Update()
@@ -48,26 +74,18 @@ namespace StateMachine.Core
             TryPerformMovement();
         }
 
-        protected abstract void CreateAbilities();
-        protected abstract void DeclareStates();
-        protected abstract CharacterStateBase DeclareInitialState();
-
-
-        private void ValidateAbilities()
+        private void TryPerformMovement()
         {
-#if UNITY_EDITOR
-            if (_abilitiesForState.Validate(out var collisions))
-            {
-                return;
-            }
+            if (_nextState == null) return;
 
-            foreach (var (state, abilityA, abilityB) in collisions)
-            {
-                Debug.LogError($"on state {state.GetType().Name} the ability {abilityA.Name} collides with {abilityB.Name}");
-            }
+            var newState = GetStateByType(_nextState);
+            _nextState = null;
+            CurrentState.ExitState();
+            foreach (var ability in CurrentAbilities) ability.Exit();
 
-            UnityEditor.EditorApplication.isPlaying = false;
-#endif
+            CurrentState = newState;
+            CurrentState.EnterState();
+            foreach (var ability in CurrentAbilities) ability.Enter();
         }
 
         protected void DeclareAbility<T>(T instance) where T : StateAbility
@@ -107,6 +125,14 @@ namespace StateMachine.Core
             return null;
         }
 
+        public T GetState<T>() where T : CharacterStateBase
+        {
+            if (_states.TryGetValue(typeof(T), out var state)) return state as T;
+
+            Debug.LogError($"there is not state of type {typeof(T).Name}");
+            return null;
+        }
+        
         private StateAbility GetAbilityByType(Type type)
         {
             const string nullMessage = "getting ability with null as type!";
@@ -117,34 +143,12 @@ namespace StateMachine.Core
             return null;
         }
 
-
-        public T GetState<T>() where T : CharacterStateBase
-        {
-            if (_states.TryGetValue(typeof(T), out var state)) return state as T;
-
-            Debug.LogError($"there is not state of type {typeof(T).Name}");
-            return null;
-        }
-
         public T GetAbility<T>() where T : StateAbility
         {
             if (_abilities.TryGetValue(typeof(T), out var ability)) return ability as T;
 
             Debug.LogError($"there is not ability of type {typeof(T).Name}");
             return null;
-        }
-
-        private void TryPerformMovement()
-        {
-            if (_nextState == null) return;
-            var newState = GetStateByType(_nextState);
-            _nextState = null;
-            CurrentState.ExitState();
-            foreach (var ability in CurrentAbilities) ability.Exit();
-
-            CurrentState = newState;
-            CurrentState.EnterState();
-            foreach (var ability in CurrentAbilities) ability.Enter();
         }
 
         private void GoToState(Type stateType)
