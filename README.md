@@ -28,4 +28,4 @@ DeclareStates:
 
 DeclareInitialState:
 
-DefaultState
+DefaultState:
