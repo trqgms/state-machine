@@ -22,6 +22,6 @@
 	{
   "displayName": "Cube Sample",
             "description": "Contains simple cube with a state machine as an example of usage",
-            "path": "Samples~/Cube Sample"}
+            "path": "Samples~/CubeSample"}
 ]
 }
