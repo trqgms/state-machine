@@ -17,5 +17,11 @@
     "email": "torquegamesa@gmail.com",
     "url": "https://github.com/torque-games/"
   },
-  "type": "library"
+  "type": "library",
+"samples" : [
+	{
+  "displayName": "Cube Sample",
+            "description": "Contains simple cube with a state machine as an example of usage",
+            "path": "Samples~/Cube Sample"}
+]
 }
