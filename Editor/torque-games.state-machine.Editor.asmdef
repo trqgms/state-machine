@@ -1,6 +1,6 @@
 {
     "name": "state-machine.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "StateMachine",
     "references": [
         "state-machine"
     ],
